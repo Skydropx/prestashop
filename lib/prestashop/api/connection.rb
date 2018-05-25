@@ -219,7 +219,11 @@ module Prestashop
 
       # Test connection based on current credentials and connection, return true or false, based if request was successfull or not.
       def test
-        connection.get.status == 200 ? true : false
+        begin
+          connection.get.status == 200 ? true : false
+        rescue Exception => e
+          false
+        end
       end
     end
   end
