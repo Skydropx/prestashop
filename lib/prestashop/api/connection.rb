@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday_middleware'
 require 'mini_magick'
 require 'tempfile'
 
@@ -42,6 +43,7 @@ module Prestashop
           builder.request     :url_encoded
           builder.request     :retry, 5
           builder.response    :logger if ENV['DEBUG']
+          builder.use         FaradayMiddleware::FollowRedirects
           builder.adapter     :net_http
           builder.basic_auth  api_key, ''
         end
